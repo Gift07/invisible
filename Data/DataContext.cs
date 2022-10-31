@@ -16,5 +16,10 @@ namespace MyApplicatioon.Data
             base.OnModelCreating(builder);
         }
         public DbSet<CustomerModel> Customer { get; set; }
+        public DbSet<CompanyModel> Company { get; set; }
+        public DbSet<EmployeeModel> Employee { get; set; }
+        public DbSet<Profits> Profit { get; set; }
+        public DbSet<CustomerStages> CustomerStage { get; set; }
+        public DbSet<CompainModel> Compaign { get; set; }
     }
 }

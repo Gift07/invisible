@@ -12,8 +12,10 @@ namespace MyApplicatioon.Models
         public Guid Id { get; set; }
         public string CompanyName { get; set; }
         public string CompanyLogo { get; set; }
+        public string RegistrationNumber { get; set; }
         public ApplicationUser Manager { get; set; }
         public List<EmployeeModel> Employees { get; set; }
+        public List<Profits> ProfitsMade { get; set; }
     }
 
     public class EmployeeModel
@@ -22,5 +24,10 @@ namespace MyApplicatioon.Models
         public ApplicationUser Employee { get; set; }
         public string Title { get; set; }
 
+    }
+    public class Profits
+    {
+        public int AmountMade { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

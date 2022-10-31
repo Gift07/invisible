@@ -1,12 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MyApplicatioon.Models;
 
 namespace MyApplicatioon.Models
 {
     public class CustomerStages
     {
-        
+        public Guid Id { get; set; }
+        public int CustomerStage { get; set; }
+        public List<CustomerModel> Customers { get; set; }
     }
 }
