@@ -8,6 +8,20 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        });
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -25,6 +39,14 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
             }
 ).AddEntityFrameworkStores<DataContext>()
 .AddDefaultTokenProviders();
+
+// add coockies
+builder.Services.Configure<CookiePolicyOptions>(options =>
+   {
+       // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+       options.CheckConsentNeeded = context => true;
+       options.MinimumSameSitePolicy = SameSiteMode.None;
+   });
 
 // For authentication
 builder.Services.AddAuthentication(
@@ -46,6 +68,15 @@ builder.Services.AddAuthentication(
                 ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
             };
+            o.Events = new JwtBearerEvents();
+            o.Events.OnMessageReceived = context =>
+            {
+                if (context.Request.Cookies.ContainsKey("X-Access-Token"))
+                {
+                    context.Token = context.Request.Cookies["X-Access-Token"];
+                }
+                return Task.CompletedTask;
+            };
         });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -53,11 +84,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseCors(
-    x => x
-    .AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader());
+app.UseCors(MyAllowSpecificOrigins);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

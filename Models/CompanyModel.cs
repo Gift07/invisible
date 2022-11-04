@@ -20,6 +20,7 @@ namespace MyApplicatioon.Models
 
     public class EmployeeModel
     {
+        [Key, Required]
         public Guid Id { get; set; }
         public ApplicationUser Employee { get; set; }
         public string Title { get; set; }
@@ -27,6 +28,9 @@ namespace MyApplicatioon.Models
     }
     public class Profits
     {
+        [Key, Required]
+        public Guid Id { get; set; }
+
         public int AmountMade { get; set; }
         public DateTime CreatedAt { get; set; }
     }

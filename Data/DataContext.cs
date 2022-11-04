@@ -21,5 +21,6 @@ namespace MyApplicatioon.Data
         public DbSet<Profits> Profit { get; set; }
         public DbSet<CustomerStages> CustomerStage { get; set; }
         public DbSet<CompainModel> Compaign { get; set; }
+        public DbSet<CalendarModel> Calendar { get; set; }
     }
 }

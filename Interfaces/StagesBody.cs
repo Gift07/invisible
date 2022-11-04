@@ -7,6 +7,6 @@ namespace MyApplicatioon.Interfaces
 {
     public class StagesBody
     {
-        
+        public string Name { get; set; }
     }
 }
